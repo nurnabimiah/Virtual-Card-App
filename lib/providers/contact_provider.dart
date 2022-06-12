@@ -13,8 +13,20 @@ class ContactProvider with ChangeNotifier{
   // data insert
   Future<int> insertContact(ContactModel contactModel) => DBHelper.insertContact(contactModel);
 
+ // data get
 
+  void getAllContacts() async
+  {
+    _contactList = await DBHelper.getAllContacts();
+    notifyListeners();
+  }
 
+  // model update and get data from new contact page .to contactList page
 
+  void updateList(ContactModel model){
+    _contactList.add(model);
+    notifyListeners();
+
+  }
 
 }

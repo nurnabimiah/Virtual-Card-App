@@ -10,7 +10,7 @@ import 'package:virtual_card_application/providers/contact_provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-      create: (context)=>ContactProvider(),
+      create: (context)=>ContactProvider()..getAllContacts(),
 
       child: MyApp()));
 }

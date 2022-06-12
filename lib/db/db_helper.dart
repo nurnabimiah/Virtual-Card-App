@@ -40,5 +40,14 @@ class DBHelper{
 
   }
 
+  // get contacts list
+
+  static Future<List<ContactModel>> getAllContacts() async{
+    final db = await open();
+    final List<Map<String,dynamic>> mapList = await db.query(tableContact);
+    return List.generate(mapList.length, (index) => ContactModel.fromMap(mapList[index])); //loop chalaisi,generate method ta kaj korse
+  }
+
+
 
 }

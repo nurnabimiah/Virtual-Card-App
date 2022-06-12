@@ -22,6 +22,19 @@ class _NewContactPageState extends State<NewContactPage> {
   final _companyController = TextEditingController();
   final _designationController = TextEditingController();
   final _websiteController = TextEditingController();
+  late ContactProvider _provider;
+  bool _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if(_isInit){
+      _provider =  Provider
+          .of<ContactProvider>(context,listen: false);
+      _isInit = false;
+
+    }
+    super.didChangeDependencies();
+  }
 
 
   /* ai dispose method ta tokhoni use kri jokhn kono state object er modde
@@ -254,9 +267,9 @@ class _NewContactPageState extends State<NewContactPage> {
         website: _websiteController.text,
       );
 
-      Provider
-          .of<ContactProvider>(context, listen:false)
-          .insertContact(contact).then((rowId) {
+      _provider.insertContact(contact).then((rowId) {
+        contact.id = rowId;
+        _provider.updateList(contact);
         Navigator.pop(context);
 
       }).catchError((error){
