@@ -1,11 +1,18 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:virtual_card_application/pages/contact_details%20page.dart';
 import 'package:virtual_card_application/pages/contact_list_page.dart';
 import 'package:virtual_card_application/pages/new_contact_pages.dart';
 import 'package:virtual_card_application/pages/scan_page.dart';
+import 'package:virtual_card_application/providers/contact_provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context)=>ContactProvider(),
+
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
