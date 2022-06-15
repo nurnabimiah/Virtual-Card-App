@@ -29,4 +29,20 @@ class ContactProvider with ChangeNotifier{
 
   }
 
+
+  // provider database thekhe jeita pabe ContactModel direct ta return kore dibe
+  // for contact details page
+  Future<ContactModel> getContactById (int id) => DBHelper.getContactByID(id);
+
+
+  // contact delete or dismis
+
+void deleteContact (int id ){
+  DBHelper.deleteContactByID(id);
+  
+}
+
+
+
+
 }

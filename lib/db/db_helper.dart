@@ -47,7 +47,34 @@ class DBHelper{
     final List<Map<String,dynamic>> mapList = await db.query(tableContact);
     return List.generate(mapList.length, (index) => ContactModel.fromMap(mapList[index])); //loop chalaisi,generate method ta kaj korse
   }
+// details page ja jan niye jassi
+  static Future<ContactModel> getContactByID(int id) async{
+    final db = await open();
+    final List<Map<String,dynamic>> mapList = await db.query(tableContact,where: '$tblContactColId = ?',whereArgs: [id]);
+    return ContactModel.fromMap(mapList.first);
+  }
+
+
+  // delete or dismissible widget
+
+  static Future<int> deleteContactByID(int id) async{ // j row ta delete holo tar row id ta return krbe
+    final db = await open();
+    return db.delete(tableContact,where: '$tblContactColId = ?',whereArgs: [id]);
+    
+  }
 
 
 
 }
+
+
+
+/*ai DBHelper er under a kiso static method thakbe , method golo use kre amra
+ insert,update,delate ai query golo use korte parbo
+
+ */
+
+
+/*function ta hobe future data base ja ekta sqlite er object,jokhoni amar kono database operation
+ krte hobe like insert update delete tokhon open() diye amader database ta k open krte hobe,
+  first of all ai database ta jekhane  create hobe er path ta amak bole dite hobe*/
