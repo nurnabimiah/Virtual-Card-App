@@ -37,7 +37,7 @@ class _ContactItemState extends State<ContactItem> {
       },
 
       child: Card(
-        color: Colors.grey,
+        color: Colors.white,
         elevation: 5,
         child: ListTile(
           onTap: (){
@@ -47,11 +47,24 @@ class _ContactItemState extends State<ContactItem> {
           contentPadding: const EdgeInsets.symmetric(horizontal:12,vertical:8 ),
           title: Text(widget.contactModel.name),
           subtitle:Text(widget.contactModel.mobile) ,
-          trailing: IconButton(
-            icon: Icon(Icons.favorite_border),
-            onPressed: (){
+          trailing: Consumer<ContactProvider>(
 
-            },
+            builder: (context,provider,_) => IconButton(
+              icon: Icon(widget.contactModel.favortite ? Icons.favorite: Icons.favorite_border),
+              onPressed: (){
+                final value = widget.contactModel.favortite ? 0 : 1;
+                provider
+                    .updateContactFavouriteById(widget.contactModel.id,value )
+                    .then((value) {
+                      setState((){
+                        widget.contactModel.favortite = ! widget.contactModel.favortite;
+
+                      });
+
+                });
+
+              },
+            ),
           ),
 
         ),

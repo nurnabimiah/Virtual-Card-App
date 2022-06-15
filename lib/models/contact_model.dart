@@ -9,7 +9,7 @@ final String tblContaqctColAddress = 'address';
 final String tblContaqctColCompany = 'company';
 final String tblContaqctColDesignation = 'designation';
 final String tblContaqctColWebsite = 'website';
-//const String tblContaqctColFavourite = 'favorite';
+final String tblContaqctColFavorite = 'favorite';
 final String tblContaqctColImage = 'image';
 
 
@@ -24,7 +24,10 @@ String company;
 String designation;
 String website;
 String image;
-//bool favortite;
+bool favortite;
+
+
+/* sqflite kinto bool value rakhte pare na eke integer a convert kore nite hobe, true hole 1 false hole 0*/
 
 
 ContactModel(
@@ -38,7 +41,7 @@ this.company = '',
 this.designation = '',
 this.website = '',
 this.image = 'https://thumbs.dreamstime.com/b/cute-boy-young-charming-man-looking-ahead-twinkling-34856138.jpg',
-//this.favortite = false
+this.favortite = false
 });
 
 /* to map method ta tokhn call korbo jokhn amra insert korte jabo or update korte jabo */
@@ -52,6 +55,7 @@ this.image = 'https://thumbs.dreamstime.com/b/cute-boy-young-charming-man-lookin
        tblContaqctColDesignation: designation,
        tblContaqctColImage: image,
        tblContaqctColWebsite: website,
+       tblContaqctColFavorite: favortite ? 1 : 0,
        /*akhon id ta aikhane include korbo na karon aita auto increment hobe
       ,update korar time a id ta include korte hobe*/
 
@@ -74,6 +78,7 @@ this.image = 'https://thumbs.dreamstime.com/b/cute-boy-young-charming-man-lookin
      designation: map[tblContaqctColDesignation],
      website: map[tblContaqctColWebsite],
      image: map[tblContaqctColImage],
+     favortite: map[tblContaqctColFavorite]==1 ? true : false,
 
      /* ai method ta k call korbo amra proti ta qury korar time a ,query korate amader jotho gola map
      proti ta row er jonno,ekta kore map pabo,ekta map mane ekta contact model,sei map ta k amra

@@ -22,6 +22,7 @@ class ContactProvider with ChangeNotifier{
   }
 
   // model update and get data from new contact page .to contactList page
+  // add korar pore update list
 
   void updateList(ContactModel model){
     _contactList.add(model);
@@ -42,6 +43,10 @@ void deleteContact (int id ){
   
 }
 
+// contact favourite update
+Future<int> updateContactFavouriteById(int id, int value){
+  return DBHelper.updateContactFavoriteById(id, value);
+}
 
 
 
