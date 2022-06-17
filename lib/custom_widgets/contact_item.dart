@@ -54,16 +54,11 @@ class _ContactItemState extends State<ContactItem> {
               onPressed: (){
                 final value = widget.contactModel.favortite ? 0 : 1;
                 provider
-                    .updateContactFavouriteById(widget.contactModel.id,value )
-                    .then((value) {
-                      setState((){
-                        widget.contactModel.favortite = ! widget.contactModel.favortite;
+                    .updateContactFavouriteById(widget.contactModel.id,value );
 
-                      });
+                },
 
-                });
 
-              },
             ),
           ),
 

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../models/contact_model.dart';
 import '../providers/contact_provider.dart';
@@ -26,7 +28,7 @@ class ContactDetailsPage extends StatelessWidget {
               builder: (context,snapshot) {
                 if(snapshot.hasData){
                   final contact = snapshot.data;
-                  return buildDetailsListBody(contact);
+                  return buildDetailsListBody(contact,context);
                 }
                 if(snapshot.hasError){
                   return const Text('Failed to fetch data');
@@ -42,7 +44,7 @@ class ContactDetailsPage extends StatelessWidget {
 
   }
 
-  ListView buildDetailsListBody(ContactModel? contact) {
+  ListView buildDetailsListBody(ContactModel? contact, BuildContext context) {
     return ListView(
                   padding: const EdgeInsets.all(12.0),
                   children: [
@@ -52,7 +54,9 @@ class ContactDetailsPage extends StatelessWidget {
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          IconButton(onPressed:() {},
+                          IconButton(onPressed:() {
+                            _callContact(contact.mobile,context);
+                          },
                               icon: Icon(Icons.call)),
                           IconButton(onPressed:() {},
                               icon: Icon(Icons.sms)),
@@ -67,7 +71,9 @@ class ContactDetailsPage extends StatelessWidget {
                     ListTile(
                       title:Text(contact.email) ,
                       trailing:
-                      IconButton(onPressed:() {},
+                      IconButton(onPressed:() {
+                        _mailContact(contact.email,context);
+                      },
                           icon: Icon(Icons.email)),
 
 
@@ -101,4 +107,35 @@ class ContactDetailsPage extends StatelessWidget {
 
                 );
   }
+
+  void _callContact(String mobile, BuildContext context) async{
+    final uri = 'tel:$mobile';
+    if(await canLaunchUrlString(uri)){
+      await launchUrlString(uri);
+    }else{
+      ScaffoldMessenger
+          .of(context)
+          .showSnackBar(SnackBar
+           (content: Text('Could not lanuch application')));
+      throw 'could not lanuch application';
+    }
+
+  }
+
+  void _mailContact(String email, BuildContext context) async {
+    final subject = 'Test';
+    final body = 'This is test';
+    final uri = 'mailto:$email?subject=$subject & body=$body';
+    if(await canLaunchUrlString(uri)){
+      await launchUrlString(uri);
+    }else{
+      ScaffoldMessenger
+          .of(context)
+          .showSnackBar(SnackBar
+        (content: Text('Could not lanuch application')));
+      throw 'could not lanuch application';
+    }
+
+  }
+
 }

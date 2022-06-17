@@ -44,8 +44,20 @@ void deleteContact (int id ){
 }
 
 // contact favourite update
-Future<int> updateContactFavouriteById(int id, int value){
-  return DBHelper.updateContactFavoriteById(id, value);
+void updateContactFavouriteById(int id, int value){
+   DBHelper.updateContactFavoriteById(id, value).then((value) {
+      final contact =  _contactList.firstWhere((element) => element.id==id);
+      final index = _contactList.indexOf(contact);
+      _contactList[index].favortite = !_contactList[index].favortite;
+      notifyListeners();
+     /*aikhane kaj ta ja korlam ta holo list view nije k refresh kortase, beparta akhon listview er gare chapai disi
+   listview j list ta  show kortase, sei list er kono ekta item change hyse, listview k bollam tmi j contact gola show
+   kortaseo,sei contacList er kotho tomo index a favorite er j value ta ase ta change hyse, so tmi nije k notify koro
+
+    */
+   });
+
+
 }
 
 
