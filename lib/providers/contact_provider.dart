@@ -36,10 +36,17 @@ class ContactProvider with ChangeNotifier{
   Future<ContactModel> getContactById (int id) => DBHelper.getContactByID(id);
 
 
+  void removeItemFromList(ContactModel model){
+    _contactList.remove(model);
+    notifyListeners();
+
+  }
+
+
   // contact delete or dismis
 
-void deleteContact (int id ){
-  DBHelper.deleteContactByID(id);
+Future<int> deleteContact (int id ){
+ return DBHelper.deleteContactByID(id);
   
 }
 

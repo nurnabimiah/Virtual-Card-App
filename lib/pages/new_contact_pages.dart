@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_card_application/pages/contact_list_page.dart';
 
 import '../models/contact_model.dart';
 import '../providers/contact_provider.dart';
@@ -22,6 +23,8 @@ class _NewContactPageState extends State<NewContactPage> {
   final _companyController = TextEditingController();
   final _designationController = TextEditingController();
   final _websiteController = TextEditingController();
+  String image = "";
+
   late ContactProvider _provider;
   bool _isInit = true;
 
@@ -30,9 +33,22 @@ class _NewContactPageState extends State<NewContactPage> {
     if(_isInit){
       _provider =  Provider
           .of<ContactProvider>(context,listen: false);
+      final contact = ModalRoute.of(context)!. settings.arguments as ContactModel;
+       image = contact.image;
+      _nameController.text = contact.name;
+      _mobileController.text = contact.mobile;
+      _emailController.text = contact.email;
+      _addressController.text = contact.address;
+      _companyController.text = contact.company;
+      _designationController.text = contact.designation;
+      _websiteController.text = contact.website;
+
+
+
       _isInit = false;
 
     }
+
     super.didChangeDependencies();
   }
 
@@ -265,12 +281,13 @@ class _NewContactPageState extends State<NewContactPage> {
         company: _companyController.text,
         designation: _designationController.text,
         website: _websiteController.text,
+        image: image,
       );
 
       _provider.insertContact(contact).then((rowId) {
         contact.id = rowId;
         _provider.updateList(contact);
-        Navigator.pop(context);
+        Navigator.popUntil(context, ModalRoute.withName(ContactListPage.routeName));
 
       }).catchError((error){
         throw error;

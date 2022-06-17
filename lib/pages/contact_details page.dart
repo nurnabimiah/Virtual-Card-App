@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -44,11 +46,11 @@ class ContactDetailsPage extends StatelessWidget {
 
   }
 
-  ListView buildDetailsListBody(ContactModel? contact, BuildContext context) {
+  Widget buildDetailsListBody(ContactModel? contact, BuildContext context) {
     return ListView(
                   padding: const EdgeInsets.all(12.0),
                   children: [
-                    Image.network( contact!.image,width: double.infinity,height: 250,fit:BoxFit.cover ,),
+                    Image.file( File(contact!.image),width: double.infinity,height: 250,fit:BoxFit.cover ,),
                     ListTile(
                       title:Text(contact.mobile) ,
                       trailing: Row(

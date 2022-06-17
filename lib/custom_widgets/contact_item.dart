@@ -32,7 +32,13 @@ class _ContactItemState extends State<ContactItem> {
       confirmDismiss: showConfirmationDialog,
       /*onDismissed method ta tokhoni call hoy jodi aita true return kore*/
       onDismissed:(_){
-        Provider.of<ContactProvider>(context,listen: false).deleteContact(widget.contactModel.id);
+        Provider
+            .of<ContactProvider>(context,listen: false)
+            .deleteContact(widget.contactModel.id).then((value){
+              context.read<ContactProvider>().removeItemFromList(widget.contactModel);
+
+
+        });
 
       },
 
