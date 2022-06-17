@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_card_application/pages/scan_page.dart';
 
 import '../custom_widgets/contact_item.dart';
 import '../providers/contact_provider.dart';
@@ -34,7 +35,7 @@ class _ContactListPageState extends State<ContactListPage> {
         child: Icon(Icons.add),
 
         onPressed: () {
-          Navigator.pushNamed(context, NewContactPage.routeName);
+          Navigator.pushNamed(context, ScanPage.routeName);
         },
 
       ),
